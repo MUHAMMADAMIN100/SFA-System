@@ -1,0 +1,73 @@
+// Единый источник дизайн-токенов (CSS custom properties).
+:root {
+  // --- Нейтральная шкала (тёплый серый) ---
+  --gray-50: #f8f8f6;
+  --gray-100: #f2f3f0;
+  --gray-200: #e2e3dd;
+  --gray-300: #cdcfc7;
+  --gray-400: #b0b3ab;
+  --gray-500: #9a9d95;
+  --gray-600: #6c6f68;
+  --gray-700: #4a4d46;
+  --gray-800: #2c2e2a;
+  --gray-900: #1b1c19;
+
+  // --- Поверхности / текст / границы (семантические алиасы) ---
+  --bg: var(--gray-100);
+  --surface: #ffffff;
+  --surface-2: var(--gray-50);
+  --text: var(--gray-900);
+  --text-muted: var(--gray-600);
+  --text-faint: var(--gray-500);
+  --border: var(--gray-200);
+  --border-strong: var(--gray-300);
+
+  // --- Акцент (спокойный деловой синий) ---
+  --primary: #1c6db0;
+  --primary-hover: #155a93;
+  --primary-soft: #e9f1f8;
+
+  // --- Семантика данных / статусы ---
+  --success: #2e7d4f;
+  --success-soft: #e7f4ec;
+  --danger: #c0392b;
+  --danger-soft: #fbeae8;
+  --warning: #9a6a00;
+  --warning-soft: #fbf2dd;
+  // Просрочка — единый тёплый красно-янтарный (совпадает с chartTheme.expired).
+  --expired: #cf5c2e;
+  --expired-soft: #f7e6dd;
+
+  // --- Шкала отступов ---
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  // --- Радиусы ---
+  --radius-sm: 7px;
+  --radius: 10px;
+  --radius-lg: 16px;
+
+  // --- Тени: мягкая многослойная глубина ---
+  --shadow-sm: 0 1px 2px rgba(20, 22, 18, 0.05), 0 1px 1px rgba(20, 22, 18, 0.04);
+  --shadow-md: 0 2px 4px rgba(20, 22, 18, 0.05), 0 8px 20px rgba(20, 22, 18, 0.08);
+  --shadow-lg: 0 4px 8px rgba(20, 22, 18, 0.06), 0 24px 48px rgba(20, 22, 18, 0.14);
+
+  // --- Кольцо фокуса ---
+  --focus-ring: 0 0 0 3px var(--primary-soft);
+
+  // --- Движение (синхронизировано с shared/config/motion.ts) ---
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+
+  // --- Типографика ---
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-display: "Manrope", -apple-system, "Segoe UI", sans-serif;
+}

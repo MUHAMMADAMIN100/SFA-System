@@ -1,0 +1,36 @@
+@use "mixins" as *;
+
+.filters {
+  @include card;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.count {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.pageNav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pageInfo {
+  font-size: 14px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}

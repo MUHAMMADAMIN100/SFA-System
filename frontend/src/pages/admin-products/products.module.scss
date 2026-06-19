@@ -1,0 +1,7 @@
+@use "mixins" as *;
+
+.filters {
+  @include card;
+  padding: 16px;
+  margin-bottom: 20px;
+}

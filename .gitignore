@@ -1,0 +1,34 @@
+# Python / Django
+backend/.venv/
+backend/__pycache__/
+**/__pycache__/
+*.pyc
+backend/db.sqlite3
+backend/media/
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# Playwright
+test-results/
+playwright-report/
+frontend/.playwright/
+frontend/e2e/screenshots/
+
+# Agent / skill tooling (not app code)
+**/.agents/
+**/skills-lock.json
+
+# pytest
+backend/.pytest_cache/
+backend/test_db.sqlite3
+
+# Env
+.env
+.env.local
+
+# OS / editor
+.DS_Store
+Thumbs.db

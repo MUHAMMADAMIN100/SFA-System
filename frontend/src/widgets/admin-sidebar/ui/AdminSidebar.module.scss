@@ -1,0 +1,108 @@
+@use "mixins" as *;
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+
+  @include desktop {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 256px;
+    flex-shrink: 0;
+    border-bottom: none;
+    border-right: 1px solid var(--border);
+  }
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+.brandSub {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 14px;
+  transition: color var(--dur-fast) var(--ease);
+
+  &:hover:not(.active) {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+
+  &.active {
+    color: var(--primary-hover);
+    font-weight: 600;
+  }
+}
+
+.activeBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--primary-soft);
+  border-radius: var(--radius-sm);
+}
+
+.linkIcon,
+.linkLabel {
+  position: relative;
+  z-index: 1;
+}
+
+.linkIcon {
+  flex-shrink: 0;
+}
+
+.groupLabel {
+  margin: 14px 12px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-faint);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.user {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+}

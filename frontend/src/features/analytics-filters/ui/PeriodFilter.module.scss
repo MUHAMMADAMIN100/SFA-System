@@ -1,0 +1,24 @@
+@use "mixins" as *;
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.presets {
+  display: flex;
+  gap: 8px;
+}
+
+.custom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dash {
+  color: var(--text-muted);
+}

@@ -1,0 +1,81 @@
+@use "mixins" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section {
+  @include card;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  font-size: 16px;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+// Обёртка для анимации height/opacity при добавлении/удалении строки.
+.rowMotion {
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+
+.qtyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.removeBtn {
+  align-self: flex-start;
+  color: var(--danger);
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.error {
+  margin: 0;
+  font-size: 13px;
+  color: var(--danger);
+}
+
+// --- Скелетоны загрузки формы ---
+.skLabel {
+  width: 30%;
+  height: 14px;
+  margin-bottom: 10px;
+}
+
+.skField {
+  height: 46px;
+  margin-bottom: 12px;
+}
+
+.skSubmit {
+  height: 52px;
+}

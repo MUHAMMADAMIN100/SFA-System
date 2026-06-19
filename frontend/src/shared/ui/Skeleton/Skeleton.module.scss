@@ -1,0 +1,43 @@
+.skeleton {
+  display: block;
+  background-color: var(--gray-200);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  animation: shimmer 1.4s var(--ease) infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -150% 0;
+  }
+  to {
+    background-position: 150% 0;
+  }
+}
+
+.text {
+  height: 14px;
+  border-radius: 5px;
+}
+
+.title {
+  height: 24px;
+  width: 40%;
+  border-radius: 6px;
+}
+
+.block {
+  height: 100%;
+  width: 100%;
+  border-radius: var(--radius);
+}
+
+.circle {
+  border-radius: 50%;
+}

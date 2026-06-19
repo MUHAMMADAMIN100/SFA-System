@@ -1,0 +1,38 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 4px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text-faint);
+}
+
+.title {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.desc {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 320px;
+}
+
+.action {
+  margin-top: 8px;
+}

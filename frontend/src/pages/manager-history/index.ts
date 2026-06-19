@@ -1,0 +1,1 @@
+export { ManagerHistoryPage } from "./ManagerHistoryPage";

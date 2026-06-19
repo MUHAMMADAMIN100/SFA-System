@@ -1,0 +1,49 @@
+.actionsCell {
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+}
+
+.inactive {
+  color: var(--text-faint);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.statusActive {
+  color: var(--success);
+  font-weight: 500;
+}
+
+.statusInactive {
+  color: var(--text-faint);
+}

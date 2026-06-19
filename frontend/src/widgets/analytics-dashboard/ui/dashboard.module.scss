@@ -1,0 +1,314 @@
+@use "mixins" as *;
+
+.filterBar {
+  @include card;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+// --- Метрики ----------------------------------------------------------------
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+
+  @include tablet {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include desktop {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.statCard {
+  @include card;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+  border-left: 3px solid var(--border-strong);
+}
+
+.statIcon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--text-faint);
+}
+
+.tone_shipped {
+  border-left-color: var(--primary);
+
+  .statIcon {
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+}
+
+.tone_expired {
+  border-left-color: var(--expired);
+
+  .statIcon {
+    background: var(--expired-soft);
+    color: var(--expired);
+  }
+}
+
+.tone_neutral {
+  border-left-color: var(--border-strong);
+}
+
+.statValue {
+  font-family: var(--font-display), var(--font);
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+// --- Сетка графиков ---------------------------------------------------------
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+
+  @include desktop {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+// --- Карточка графика -------------------------------------------------------
+.card {
+  @include card;
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.grid2 .card {
+  margin-bottom: 0;
+}
+
+.cardHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  font-size: 16px;
+}
+
+.cardSub {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.chartWrap {
+  width: 100%;
+  height: 280px;
+}
+
+.donutChart {
+  position: relative;
+  width: 100%;
+  height: 220px;
+}
+
+// --- Скелетоны ---
+.skStat {
+  height: 58px;
+}
+
+.skChart {
+  height: 280px;
+}
+
+.donutCenter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.donutTotal {
+  font-family: var(--font-display), var(--font);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.donutCaption {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 280px;
+  color: var(--text-faint);
+  font-size: 14px;
+}
+
+// --- Топ-список товаров по % просрочки --------------------------------------
+.topList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: var(--radius-sm);
+
+  &:hover {
+    background: var(--surface-2);
+  }
+
+  & + & {
+    border-top: 1px solid var(--border);
+  }
+}
+
+.topName {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.topQty {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+// Легенда для donut
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legendRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.legendDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.legendName {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+.legendVal {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.donutLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: center;
+
+  @media (min-width: 520px) {
+    grid-template-columns: 220px 1fr;
+  }
+}
+
+// Горизонтальная легенда серий над графиком
+.seriesLegend {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.seriesItem {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+// Цвета-свотчи легенд (синхронизированы с chartTheme.ts)
+.dotShipped {
+  background: #1c6db0;
+}
+.dotExpired {
+  background: #cf5c2e;
+}
+.dotThreshold {
+  background: #cf5c2e;
+}
+.cat0 {
+  background: #1c6db0;
+}
+.cat1 {
+  background: #4a93c6;
+}
+.cat2 {
+  background: #52a8a0;
+}
+.cat3 {
+  background: #7da45c;
+}
+.cat4 {
+  background: #d9a441;
+}
+.cat5 {
+  background: #cf5c2e;
+}
+.catRest {
+  background: #b6b8b0;
+}
