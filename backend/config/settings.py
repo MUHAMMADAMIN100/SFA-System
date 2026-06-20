@@ -35,8 +35,8 @@ SECRET_KEY = os.environ.get(
 )
 DEBUG = env_bool("DEBUG", False)  # на Railway оставить False; локально .env ставит True
 
-ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "localhost,127.0.0.1")
-CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", "")
+ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "localhost,127.0.0.1,.railway.app")
+CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", "https://*.railway.app")
 
 # Railway подставляет публичный домен в рантайме — доверяем ему автоматически.
 RAILWAY_DOMAIN = os.environ.get("RAILWAY_PUBLIC_DOMAIN")
