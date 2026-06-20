@@ -1,8 +1,8 @@
 """Root URL configuration."""
 from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
+from django.views.static import serve as media_serve
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
@@ -32,7 +32,12 @@ urlpatterns = [
     # Apps
     path("api/", include("apps.catalog.urls")),
     path("api/", include("apps.visits.urls")),
+    # Медиа (фото накладных). Раздаётся Django и в проде — на Railway файлы лежат
+    # на смонтированном Volume (MEDIA_ROOT). Для внутренней системы это допустимо;
+    # при росте нагрузки перейти на объектное хранилище (Cloudinary / S3 / R2).
+    re_path(
+        r"^media/(?P<path>.*)$",
+        media_serve,
+        {"document_root": settings.MEDIA_ROOT},
+    ),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
