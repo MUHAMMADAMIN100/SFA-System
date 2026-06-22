@@ -1,0 +1,29 @@
+.content {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.iconDanger {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.message {
+  margin: 0;
+  padding-top: 2px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text);
+
+  b {
+    font-weight: 600;
+  }
+}

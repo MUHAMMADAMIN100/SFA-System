@@ -16,6 +16,7 @@ import {
   Input,
   Modal,
   RowAction,
+  useConfirm,
   useToast,
 } from "@/shared/ui";
 import catalog from "@/shared/styles/catalog.module.scss";
@@ -29,6 +30,7 @@ const getAvatar = (): Avatar => ({ kind: "icon", icon: StoreIcon, tone: "info" }
 
 export function StoresCatalogPage() {
   const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const [items, setItems] = useState<Store[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -88,7 +90,17 @@ export function StoresCatalogPage() {
   }
 
   async function remove(store: Store) {
-    if (!window.confirm(`Удалить «${store.name}»?`)) return;
+    const ok = await confirm({
+      title: "Удалить магазин?",
+      message: (
+        <>
+          Магазин <b>«{store.name}»</b> будет удалён без возможности восстановления.
+        </>
+      ),
+      confirmLabel: "Удалить",
+      danger: true,
+    });
+    if (!ok) return;
     try {
       await deleteStore(store.id);
       showToast("Удалено", "success");

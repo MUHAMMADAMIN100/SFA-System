@@ -9,7 +9,7 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 
 import { router } from "@/app/router";
-import { ToastProvider } from "@/shared/ui";
+import { ConfirmProvider, ToastProvider } from "@/shared/ui";
 
 import "@/app/globals.scss";
 
@@ -19,7 +19,9 @@ createRoot(document.getElementById("root") as HTMLElement).render(
         transform-анимации к простому fade автоматически. */}
     <MotionConfig reducedMotion="user">
       <ToastProvider>
-        <RouterProvider router={router} />
+        <ConfirmProvider>
+          <RouterProvider router={router} />
+        </ConfirmProvider>
       </ToastProvider>
     </MotionConfig>
   </React.StrictMode>

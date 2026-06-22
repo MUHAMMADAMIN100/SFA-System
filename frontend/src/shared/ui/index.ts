@@ -23,3 +23,5 @@ export { EmptyState } from "./EmptyState/EmptyState";
 export { CountUp } from "./CountUp/CountUp";
 export { FadeImg } from "./FadeImg/FadeImg";
 export { ToastProvider, useToast } from "./Toast/ToastProvider";
+export { ConfirmProvider, useConfirm } from "./Confirm/ConfirmProvider";
+export type { ConfirmOptions } from "./Confirm/ConfirmProvider";

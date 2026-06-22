@@ -1,8 +1,9 @@
-import { Pencil, Power, Users } from "lucide-react";
+import { Pencil, Power, Trash2, Users } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 
 import {
   createManager,
+  deleteManager,
   fetchManagers,
   Manager,
   updateManager,
@@ -17,6 +18,7 @@ import {
   Modal,
   RowAction,
   RowStatus,
+  useConfirm,
   useToast,
 } from "@/shared/ui";
 import catalog from "@/shared/styles/catalog.module.scss";
@@ -36,6 +38,7 @@ const getStatus = (m: Manager): RowStatus => (m.is_active ? "active" : "inactive
 
 export function ManagersCatalogPage() {
   const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const [items, setItems] = useState<Manager[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -117,6 +120,30 @@ export function ManagersCatalogPage() {
     }
   }
 
+  async function remove(m: Manager) {
+    const ok = await confirm({
+      title: "Удалить менеджера?",
+      message: (
+        <>
+          Менеджер <b>«{m.full_name || m.username}»</b> будет удалён без возможности
+          восстановления.
+        </>
+      ),
+      confirmLabel: "Удалить",
+      danger: true,
+    });
+    if (!ok) return;
+    try {
+      await deleteManager(m.id);
+      showToast("Менеджер удалён", "success");
+      load();
+    } catch (err) {
+      const detail = (err as { response?: { data?: { detail?: string } } })?.response
+        ?.data?.detail;
+      showToast(detail ?? "Не удалось удалить менеджера", "error");
+    }
+  }
+
   const getActions = (m: Manager): RowAction<Manager>[] => [
     { icon: Pencil, label: "Изменить", onClick: () => openEdit(m) },
     {
@@ -124,6 +151,7 @@ export function ManagersCatalogPage() {
       label: m.is_active ? "Деактивировать" : "Активировать",
       onClick: () => toggleActive(m),
     },
+    { icon: Trash2, label: "Удалить", onClick: () => remove(m), variant: "danger" },
   ];
 
   return (
