@@ -67,8 +67,13 @@ export function AdminSidebar() {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.brand}>
-        <span className={styles.logo}>SFA</span>
-        <span className={styles.brandSub}>Панель администратора</span>
+        <span className={styles.logoMark} aria-hidden>
+          SFA
+        </span>
+        <span className={styles.brandText}>
+          <span className={styles.logo}>SFA CRM</span>
+          <span className={styles.brandSub}>Панель администратора</span>
+        </span>
       </div>
 
       <nav className={styles.nav}>

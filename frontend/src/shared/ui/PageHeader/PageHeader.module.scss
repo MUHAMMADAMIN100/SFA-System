@@ -4,11 +4,35 @@
   gap: 12px;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.titleBlock {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+// Вертикальный брендовый акцент слева от заголовка.
+.accent {
+  flex-shrink: 0;
+  width: 4px;
+  align-self: stretch;
+  min-height: 30px;
+  border-radius: 4px;
+  background: var(--grad-brand);
 }
 
 .title {
-  font-size: 22px;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 3px 0 0;
+  font-size: 13.5px;
+  color: var(--text-muted);
 }
 
 .actions {

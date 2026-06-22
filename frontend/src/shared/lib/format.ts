@@ -16,3 +16,9 @@ export function formatPercent(value: number): string {
 export function formatNumber(value: number): string {
   return value.toLocaleString("ru-RU");
 }
+
+export function formatPrice(value: string | number): string {
+  const n = typeof value === "string" ? Number(value) : value;
+  if (!Number.isFinite(n)) return String(value);
+  return n.toLocaleString("ru-RU", { maximumFractionDigits: 2 });
+}

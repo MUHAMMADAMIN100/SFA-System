@@ -1,4 +1,4 @@
-import { Pencil, Plus, Store as StoreIcon, Trash2 } from "lucide-react";
+import { MapPin, Pencil, Plus, Store as StoreIcon, Trash2 } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 
 import {
@@ -95,6 +95,11 @@ export function StoresCatalogPage() {
     <>
       <PageHeader
         title="Магазины"
+        subtitle={
+          items.length
+            ? `${items.length} точек продаж в системе`
+            : "Точки продаж, где менеджеры оформляют визиты"
+        }
         actions={
           <Button icon={<Plus size={16} aria-hidden />} onClick={openCreate}>
             Добавить магазин
@@ -127,8 +132,24 @@ export function StoresCatalogPage() {
           <tbody>
             {items.map((s) => (
               <tr key={s.id}>
-                <td>{s.name}</td>
-                <td>{s.address || "—"}</td>
+                <td>
+                  <div className={catalog.nameCell}>
+                    <span className={catalog.tile}>
+                      <StoreIcon size={18} aria-hidden />
+                    </span>
+                    <span className={catalog.nameTitle}>{s.name}</span>
+                  </div>
+                </td>
+                <td>
+                  {s.address ? (
+                    <span className={catalog.address}>
+                      <MapPin size={14} aria-hidden />
+                      {s.address}
+                    </span>
+                  ) : (
+                    "—"
+                  )}
+                </td>
                 <td>
                   <div className={catalog.actionsCell}>
                     <Button

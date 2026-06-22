@@ -46,11 +46,14 @@
 }
 
 .primary {
-  background: var(--primary);
+  background: var(--grad-primary);
   color: #fff;
+  box-shadow: 0 1px 2px rgba(15, 63, 104, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 
   &:not(:disabled):hover {
-    background: var(--primary-hover);
+    box-shadow: 0 4px 12px rgba(15, 63, 104, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 }
 
@@ -58,18 +61,23 @@
   background: var(--surface);
   border-color: var(--border-strong);
   color: var(--text);
+  box-shadow: var(--shadow-sm);
 
   &:not(:disabled):hover {
     background: var(--surface-2);
+    border-color: var(--gray-400);
   }
 }
 
 .danger {
   background: var(--danger);
   color: #fff;
+  box-shadow: 0 1px 2px rgba(120, 30, 22, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
 
   &:not(:disabled):hover {
-    filter: brightness(0.93);
+    filter: brightness(1.05);
+    box-shadow: 0 4px 12px rgba(120, 30, 22, 0.26);
   }
 }
 

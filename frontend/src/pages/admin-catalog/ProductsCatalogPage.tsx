@@ -7,6 +7,7 @@ import {
   Product,
   updateProduct,
 } from "@/entities/product";
+import { formatPrice } from "@/shared/lib/format";
 import {
   Button,
   EmptyState,
@@ -100,6 +101,11 @@ export function ProductsCatalogPage() {
     <>
       <PageHeader
         title="Товары"
+        subtitle={
+          items.length
+            ? `${items.length} позиций в каталоге`
+            : "Каталог товаров для оформления визитов"
+        }
         actions={
           <Button icon={<Plus size={16} aria-hidden />} onClick={openCreate}>
             Добавить товар
@@ -134,19 +140,31 @@ export function ProductsCatalogPage() {
           <tbody>
             {items.map((p) => (
               <tr key={p.id} className={p.is_active ? "" : catalog.inactive}>
-                <td>{p.name}</td>
+                <td>
+                  <div className={catalog.nameCell}>
+                    <span className={`${catalog.tile} ${catalog.tileProduct}`}>
+                      <Package size={18} aria-hidden />
+                    </span>
+                    <span className={catalog.nameTitle}>{p.name}</span>
+                  </div>
+                </td>
                 <td>{p.volume}</td>
-                <td>{p.price}</td>
+                <td>
+                  <span className={catalog.price}>
+                    {formatPrice(p.price)}
+                    <span className={catalog.currency}>сум</span>
+                  </span>
+                </td>
                 <td>
                   <span
-                    className={`${catalog.status} ${
-                      p.is_active ? catalog.statusActive : catalog.statusInactive
+                    className={`${catalog.pill} ${
+                      p.is_active ? catalog.pillActive : catalog.pillInactive
                     }`}
                   >
                     {p.is_active ? (
-                      <CheckCircle2 size={14} aria-hidden />
+                      <CheckCircle2 size={13} aria-hidden />
                     ) : (
-                      <XCircle size={14} aria-hidden />
+                      <XCircle size={13} aria-hidden />
                     )}
                     {p.is_active ? "Активен" : "Неактивен"}
                   </span>

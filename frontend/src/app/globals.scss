@@ -13,6 +13,8 @@ body {
 body {
   font-family: var(--font);
   background: var(--bg);
+  background-image: var(--grad-page);
+  background-attachment: fixed;
   color: var(--text);
   font-size: 15px;
   line-height: 1.5;

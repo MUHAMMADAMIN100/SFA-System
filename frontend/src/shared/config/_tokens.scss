@@ -26,6 +26,17 @@
   --primary: #1c6db0;
   --primary-hover: #155a93;
   --primary-soft: #e9f1f8;
+  --primary-ink: #0f3f68;
+  // Градиенты — для брендовых акцентов (кнопки, логотип, заголовки).
+  --grad-primary: linear-gradient(135deg, #2a82c9 0%, #1c6db0 55%, #155a93 100%);
+  --grad-brand: linear-gradient(135deg, #2a82c9 0%, #2563a8 50%, #1d8f7a 130%);
+  // Тонкий фон страницы — почти незаметный тёплый градиент.
+  --grad-page: radial-gradient(
+      1200px 600px at 100% -5%,
+      rgba(28, 109, 176, 0.06),
+      transparent 60%
+    ),
+    radial-gradient(900px 500px at -10% 110%, rgba(46, 125, 79, 0.05), transparent 55%);
 
   // --- Семантика данных / статусы ---
   --success: #2e7d4f;
@@ -59,6 +70,20 @@
 
   // --- Кольцо фокуса ---
   --focus-ring: 0 0 0 3px var(--primary-soft);
+
+  // --- Палитра аватаров/плиток (мягкие пары «фон / текст») ---
+  --av-1-bg: #e6f0fb;
+  --av-1-fg: #1c6db0;
+  --av-2-bg: #e6f5ee;
+  --av-2-fg: #2e7d4f;
+  --av-3-bg: #f3eafb;
+  --av-3-fg: #7a4db0;
+  --av-4-bg: #fbeede;
+  --av-4-fg: #b9701a;
+  --av-5-bg: #fde9ea;
+  --av-5-fg: #c0392b;
+  --av-6-bg: #e3f3f3;
+  --av-6-fg: #1d8f7a;
 
   // --- Движение (синхронизировано с shared/config/motion.ts) ---
   --ease: cubic-bezier(0.22, 1, 0.36, 1);

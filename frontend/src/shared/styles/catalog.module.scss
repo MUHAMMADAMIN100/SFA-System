@@ -2,6 +2,7 @@
   display: flex;
   gap: 8px;
   white-space: nowrap;
+  justify-content: flex-end;
 }
 
 .form {
@@ -29,6 +30,109 @@
   color: var(--text-faint);
 }
 
+// --- Ячейка «сущность»: плитка/аватар + название (+ подпись) ----------------
+.nameCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.nameText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nameTitle {
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subText {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+// Плитка с иконкой (магазины/товары).
+.tile {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  box-shadow: inset 0 0 0 1px rgba(28, 109, 176, 0.12);
+}
+
+.tileProduct {
+  background: var(--av-6-bg);
+  color: var(--av-6-fg);
+  box-shadow: inset 0 0 0 1px rgba(29, 143, 122, 0.14);
+}
+
+// Круглый аватар с инициалами (менеджеры) — цвет задаётся модификатором.
+.avatar {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-family: var(--font-display), var(--font);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.av0 { background: var(--av-1-bg); color: var(--av-1-fg); }
+.av1 { background: var(--av-2-bg); color: var(--av-2-fg); }
+.av2 { background: var(--av-3-bg); color: var(--av-3-fg); }
+.av3 { background: var(--av-4-bg); color: var(--av-4-fg); }
+.av4 { background: var(--av-5-bg); color: var(--av-5-fg); }
+.av5 { background: var(--av-6-bg); color: var(--av-6-fg); }
+
+.avatarMuted {
+  filter: grayscale(0.7);
+  opacity: 0.7;
+}
+
+// Цена — крупнее, моноширинные цифры, с подписью валюты.
+.price {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.currency {
+  margin-left: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-faint);
+}
+
+// Адрес с иконкой-точкой.
+.address {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+
+  svg {
+    flex-shrink: 0;
+    color: var(--text-faint);
+  }
+}
+
+// --- Статус-пилюли ----------------------------------------------------------
 .status {
   display: inline-flex;
   align-items: center;
@@ -39,6 +143,34 @@
   }
 }
 
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px 4px 9px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.pillActive {
+  background: var(--success-soft);
+  color: var(--success);
+  box-shadow: inset 0 0 0 1px rgba(46, 125, 79, 0.18);
+}
+
+.pillInactive {
+  background: var(--gray-100);
+  color: var(--text-faint);
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+// Старые алиасы (на случай внешних ссылок) — оставлены для совместимости.
 .statusActive {
   color: var(--success);
   font-weight: 500;

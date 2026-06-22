@@ -14,6 +14,7 @@ import {
   Manager,
   updateManager,
 } from "@/entities/user";
+import { avatarIndex, initials } from "@/shared/lib/avatar";
 import {
   Button,
   EmptyState,
@@ -113,6 +114,11 @@ export function ManagersCatalogPage() {
     <>
       <PageHeader
         title="Менеджеры"
+        subtitle={
+          items.length
+            ? `${items.length} учётных записей менеджеров`
+            : "Полевые сотрудники, оформляющие визиты"
+        }
         actions={
           <Button icon={<Plus size={16} aria-hidden />} onClick={openCreate}>
             Добавить менеджера
@@ -146,18 +152,29 @@ export function ManagersCatalogPage() {
           <tbody>
             {items.map((m) => (
               <tr key={m.id} className={m.is_active ? "" : catalog.inactive}>
-                <td>{m.full_name || "—"}</td>
+                <td>
+                  <div className={catalog.nameCell}>
+                    <span
+                      className={`${catalog.avatar} ${
+                        catalog[`av${avatarIndex(m.username)}`]
+                      } ${m.is_active ? "" : catalog.avatarMuted}`}
+                    >
+                      {initials(m.full_name || m.username)}
+                    </span>
+                    <span className={catalog.nameTitle}>{m.full_name || "—"}</span>
+                  </div>
+                </td>
                 <td>{m.username}</td>
                 <td>
                   <span
-                    className={`${catalog.status} ${
-                      m.is_active ? catalog.statusActive : catalog.statusInactive
+                    className={`${catalog.pill} ${
+                      m.is_active ? catalog.pillActive : catalog.pillInactive
                     }`}
                   >
                     {m.is_active ? (
-                      <CheckCircle2 size={14} aria-hidden />
+                      <CheckCircle2 size={13} aria-hidden />
                     ) : (
-                      <XCircle size={14} aria-hidden />
+                      <XCircle size={13} aria-hidden />
                     )}
                     {m.is_active ? "Активен" : "Неактивен"}
                   </span>
