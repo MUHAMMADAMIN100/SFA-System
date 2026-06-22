@@ -10,6 +10,11 @@
   color: var(--text-muted);
 }
 
+.control {
+  position: relative;
+  display: block;
+}
+
 .input {
   width: 100%;
   padding: 11px 13px;
@@ -28,6 +33,20 @@
     border-color: var(--primary);
     box-shadow: 0 0 0 3px var(--primary-soft);
   }
+}
+
+.hasSuffix {
+  padding-right: 48px;
+}
+
+.suffix {
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: var(--text-faint);
+  pointer-events: none;
 }
 
 .invalid {

@@ -5,30 +5,11 @@
   gap: 14px;
 }
 
-.checkboxRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  cursor: pointer;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  transition: border-color var(--dur-fast) var(--ease),
-    background var(--dur-fast) var(--ease);
-
-  &:hover {
-    border-color: var(--gray-400);
-    background: var(--surface-2);
-  }
-}
-
-.checkbox {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--primary);
+// Два поля в ряд (объём + цена).
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
 }
 
 // Цена в таблице товаров: моноширинные цифры + приглушённый суффикс валюты.

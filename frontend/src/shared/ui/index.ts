@@ -1,5 +1,6 @@
 export { Button } from "./Button/Button";
 export { Input } from "./Input/Input";
+export { Switch } from "./Switch/Switch";
 export { Select } from "./Select/Select";
 export { SearchableSelect } from "./SearchableSelect/SearchableSelect";
 export type { Option } from "./SearchableSelect/SearchableSelect";

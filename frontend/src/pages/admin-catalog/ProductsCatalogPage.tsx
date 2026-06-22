@@ -1,8 +1,9 @@
-import { Milk, Pencil, Power } from "lucide-react";
+import { Milk, Pencil, Power, Trash2 } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 
 import {
   createProduct,
+  deleteProduct,
   fetchProducts,
   Product,
   updateProduct,
@@ -17,6 +18,8 @@ import {
   Modal,
   RowAction,
   RowStatus,
+  Switch,
+  useConfirm,
   useToast,
 } from "@/shared/ui";
 import catalog from "@/shared/styles/catalog.module.scss";
@@ -43,6 +46,7 @@ const getStatus = (p: Product): RowStatus => (p.is_active ? "active" : "inactive
 
 export function ProductsCatalogPage() {
   const { showToast } = useToast();
+  const { confirm } = useConfirm();
   const [items, setItems] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -118,6 +122,29 @@ export function ProductsCatalogPage() {
     }
   }
 
+  async function remove(p: Product) {
+    const ok = await confirm({
+      title: "Удалить товар?",
+      message: (
+        <>
+          Товар <b>«{p.name}»</b> будет удалён без возможности восстановления.
+        </>
+      ),
+      confirmLabel: "Удалить",
+      danger: true,
+    });
+    if (!ok) return;
+    try {
+      await deleteProduct(p.id);
+      showToast("Товар удалён", "success");
+      load();
+    } catch (err) {
+      const detail = (err as { response?: { data?: { detail?: string } } })?.response
+        ?.data?.detail;
+      showToast(detail ?? "Не удалось удалить товар", "error");
+    }
+  }
+
   const getActions = (p: Product): RowAction<Product>[] => [
     { icon: Pencil, label: "Изменить", onClick: () => openEdit(p) },
     {
@@ -125,6 +152,7 @@ export function ProductsCatalogPage() {
       label: p.is_active ? "Деактивировать" : "Активировать",
       onClick: () => toggleActive(p),
     },
+    { icon: Trash2, label: "Удалить", onClick: () => remove(p), variant: "danger" },
   ];
 
   return (
@@ -171,31 +199,33 @@ export function ProductsCatalogPage() {
             onChange={(e) => setName(e.target.value)}
             required
           />
-          <Input
-            label="Объём/вес (напр. «1 л», «500 г»)"
-            value={volume}
-            onChange={(e) => setVolume(e.target.value)}
-            required
-          />
-          <Input
-            label="Цена"
-            type="number"
-            min={0}
-            step="0.01"
-            inputMode="decimal"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          />
-          <label className={catalog.checkboxRow}>
-            <input
-              type="checkbox"
-              className={catalog.checkbox}
-              checked={isActive}
-              onChange={(e) => setIsActive(e.target.checked)}
+          <div className={catalog.formRow}>
+            <Input
+              label="Объём/вес"
+              placeholder="напр. 1 л, 500 г"
+              value={volume}
+              onChange={(e) => setVolume(e.target.value)}
+              required
             />
-            Активен
-          </label>
+            <Input
+              label="Цена"
+              type="number"
+              min={0}
+              step="0.01"
+              inputMode="decimal"
+              suffix="смн"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              required
+            />
+          </div>
+          <Switch
+            checked={isActive}
+            onChange={setIsActive}
+            tone="success"
+            label="Активен"
+            description="Доступен для оформления визитов"
+          />
         </form>
       </Modal>
     </>
