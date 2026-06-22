@@ -134,7 +134,13 @@ export function StoresCatalogPage() {
       <Modal
         open={open}
         onClose={() => setOpen(false)}
+        icon={StoreIcon}
         title={editing ? "Изменить магазин" : "Новый магазин"}
+        subtitle={
+          editing
+            ? "Обновите название и адрес точки"
+            : "Точка продаж для оформления визитов"
+        }
         footer={
           <>
             <Button variant="secondary" onClick={() => setOpen(false)}>

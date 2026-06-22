@@ -147,7 +147,12 @@ export function ProductsCatalogPage() {
       <Modal
         open={open}
         onClose={() => setOpen(false)}
+        icon={Milk}
+        iconTone="success"
         title={editing ? "Изменить товар" : "Новый товар"}
+        subtitle={
+          editing ? "Обновите данные позиции" : "Новая позиция в каталоге товаров"
+        }
         footer={
           <>
             <Button variant="secondary" onClick={() => setOpen(false)}>

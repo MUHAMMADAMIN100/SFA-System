@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { LucideIcon, X } from "lucide-react";
 import { useEffect } from "react";
 
 import { dur, ease } from "@/shared/config/motion";
@@ -10,11 +10,23 @@ interface ModalProps {
   open: boolean;
   onClose: () => void;
   title?: string;
+  subtitle?: string;
+  icon?: LucideIcon;
+  iconTone?: "info" | "success" | "danger";
   children: React.ReactNode;
   footer?: React.ReactNode;
 }
 
-export function Modal({ open, onClose, title, children, footer }: ModalProps) {
+export function Modal({
+  open,
+  onClose,
+  title,
+  subtitle,
+  icon: Icon,
+  iconTone = "info",
+  children,
+  footer,
+}: ModalProps) {
   useEffect(() => {
     if (!open) return;
     function onKey(e: KeyboardEvent) {
@@ -37,6 +49,8 @@ export function Modal({ open, onClose, title, children, footer }: ModalProps) {
         >
           <motion.div
             className={styles.dialog}
+            role="dialog"
+            aria-modal="true"
             onClick={(e) => e.stopPropagation()}
             initial={{ opacity: 0, scale: 0.96, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -45,7 +59,20 @@ export function Modal({ open, onClose, title, children, footer }: ModalProps) {
           >
             {title && (
               <header className={styles.header}>
-                <h3 className={styles.title}>{title}</h3>
+                <div className={styles.headMain}>
+                  {Icon && (
+                    <span
+                      className={`${styles.iconTile} ${styles[`tone_${iconTone}`]}`}
+                      aria-hidden
+                    >
+                      <Icon size={20} strokeWidth={1.9} />
+                    </span>
+                  )}
+                  <div className={styles.titles}>
+                    <h3 className={styles.title}>{title}</h3>
+                    {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+                  </div>
+                </div>
                 <button className={styles.close} onClick={onClose} aria-label="Закрыть">
                   <X size={18} aria-hidden />
                 </button>

@@ -174,7 +174,13 @@ export function ManagersCatalogPage() {
       <Modal
         open={open}
         onClose={() => setOpen(false)}
+        icon={Users}
         title={editing ? "Изменить менеджера" : "Новый менеджер"}
+        subtitle={
+          editing
+            ? "Обновите ФИО или сбросьте пароль"
+            : "Создайте учётную запись менеджера"
+        }
         footer={
           <>
             <Button variant="secondary" onClick={() => setOpen(false)}>
