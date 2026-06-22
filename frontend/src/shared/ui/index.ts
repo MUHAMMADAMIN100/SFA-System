@@ -5,6 +5,15 @@ export { SearchableSelect } from "./SearchableSelect/SearchableSelect";
 export type { Option } from "./SearchableSelect/SearchableSelect";
 export { Modal } from "./Modal/Modal";
 export { Table } from "./Table/Table";
+export { DataTable } from "./DataTable/DataTable";
+export type {
+  Avatar,
+  AvatarTone,
+  Column,
+  DataTableProps,
+  RowAction,
+  RowStatus,
+} from "./DataTable/DataTable";
 export { PageHeader } from "./PageHeader/PageHeader";
 export { PercentBadge } from "./PercentBadge/PercentBadge";
 export { Spinner } from "./Spinner/Spinner";

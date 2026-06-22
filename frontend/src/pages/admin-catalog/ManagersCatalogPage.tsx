@@ -1,11 +1,4 @@
-import {
-  CheckCircle2,
-  Pencil,
-  Plus,
-  Power,
-  UserCog,
-  XCircle,
-} from "lucide-react";
+import { Pencil, Power, Users } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 
 import {
@@ -14,18 +7,32 @@ import {
   Manager,
   updateManager,
 } from "@/entities/user";
-import { avatarIndex, initials } from "@/shared/lib/avatar";
+import { initials } from "@/shared/lib/avatar";
 import {
+  Avatar,
   Button,
-  EmptyState,
+  Column,
+  DataTable,
   Input,
   Modal,
-  PageHeader,
-  Table,
-  TableSkeleton,
+  RowAction,
+  RowStatus,
   useToast,
 } from "@/shared/ui";
 import catalog from "@/shared/styles/catalog.module.scss";
+
+const columns: Column<Manager>[] = [
+  { key: "name", header: "ФИО", width: "46%", render: (m) => m.full_name || "—" },
+  { key: "username", header: "Логин", width: "32%", render: (m) => m.username },
+];
+
+const getAvatar = (m: Manager): Avatar => ({
+  kind: "initials",
+  initials: initials(m.full_name || m.username),
+  tone: m.is_active ? "info" : "muted",
+});
+
+const getStatus = (m: Manager): RowStatus => (m.is_active ? "active" : "inactive");
 
 export function ManagersCatalogPage() {
   const { showToast } = useToast();
@@ -110,98 +117,31 @@ export function ManagersCatalogPage() {
     }
   }
 
+  const getActions = (m: Manager): RowAction<Manager>[] => [
+    { icon: Pencil, label: "Изменить", onClick: () => openEdit(m) },
+    {
+      icon: Power,
+      label: m.is_active ? "Деактивировать" : "Активировать",
+      onClick: () => toggleActive(m),
+    },
+  ];
+
   return (
     <>
-      <PageHeader
+      <DataTable<Manager>
         title="Менеджеры"
-        subtitle={
-          items.length
-            ? `${items.length} учётных записей менеджеров`
-            : "Полевые сотрудники, оформляющие визиты"
-        }
-        actions={
-          <Button icon={<Plus size={16} aria-hidden />} onClick={openCreate}>
-            Добавить менеджера
-          </Button>
-        }
+        addLabel="Добавить менеджера"
+        onAdd={openCreate}
+        columns={columns}
+        rows={items}
+        rowKey={(m) => m.id}
+        getAvatar={getAvatar}
+        getStatus={getStatus}
+        getActions={getActions}
+        loading={loading}
+        emptyIcon={Users}
+        emptyText="Менеджеров пока нет — создайте первого"
       />
-
-      {loading ? (
-        <TableSkeleton rows={5} cols={4} />
-      ) : items.length === 0 ? (
-        <EmptyState
-          icon={UserCog}
-          title="Менеджеров пока нет"
-          description="Создайте учётные записи менеджеров: ФИО, логин и пароль."
-          action={
-            <Button icon={<Plus size={16} aria-hidden />} onClick={openCreate}>
-              Добавить менеджера
-            </Button>
-          }
-        />
-      ) : (
-        <Table>
-          <thead>
-            <tr>
-              <th>ФИО</th>
-              <th>Логин</th>
-              <th>Статус</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((m) => (
-              <tr key={m.id} className={m.is_active ? "" : catalog.inactive}>
-                <td>
-                  <div className={catalog.nameCell}>
-                    <span
-                      className={`${catalog.avatar} ${
-                        catalog[`av${avatarIndex(m.username)}`]
-                      } ${m.is_active ? "" : catalog.avatarMuted}`}
-                    >
-                      {initials(m.full_name || m.username)}
-                    </span>
-                    <span className={catalog.nameTitle}>{m.full_name || "—"}</span>
-                  </div>
-                </td>
-                <td>{m.username}</td>
-                <td>
-                  <span
-                    className={`${catalog.pill} ${
-                      m.is_active ? catalog.pillActive : catalog.pillInactive
-                    }`}
-                  >
-                    {m.is_active ? (
-                      <CheckCircle2 size={13} aria-hidden />
-                    ) : (
-                      <XCircle size={13} aria-hidden />
-                    )}
-                    {m.is_active ? "Активен" : "Неактивен"}
-                  </span>
-                </td>
-                <td>
-                  <div className={catalog.actionsCell}>
-                    <Button
-                      variant="secondary"
-                      icon={<Pencil size={15} aria-hidden />}
-                      onClick={() => openEdit(m)}
-                    >
-                      Изменить
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      icon={<Power size={15} aria-hidden />}
-                      onClick={() => toggleActive(m)}
-                    >
-                      {m.is_active ? "Деактивировать" : "Активировать"}
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
 
       <Modal
         open={open}

@@ -1,4 +1,4 @@
-import { CheckCircle2, Package, Pencil, Plus, Power, XCircle } from "lucide-react";
+import { Milk, Pencil, Power } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 
 import {
@@ -9,16 +9,37 @@ import {
 } from "@/entities/product";
 import { formatPrice } from "@/shared/lib/format";
 import {
+  Avatar,
   Button,
-  EmptyState,
+  Column,
+  DataTable,
   Input,
   Modal,
-  PageHeader,
-  Table,
-  TableSkeleton,
+  RowAction,
+  RowStatus,
   useToast,
 } from "@/shared/ui";
 import catalog from "@/shared/styles/catalog.module.scss";
+
+const columns: Column<Product>[] = [
+  { key: "name", header: "Название", width: "34%", render: (p) => p.name },
+  { key: "volume", header: "Объём/вес", width: "16%", render: (p) => p.volume },
+  {
+    key: "price",
+    header: "Цена",
+    width: "28%",
+    align: "right",
+    render: (p) => (
+      <span className={catalog.price}>
+        {formatPrice(p.price)}
+        <span className={catalog.currency}>смн</span>
+      </span>
+    ),
+  },
+];
+
+const getAvatar = (): Avatar => ({ kind: "icon", icon: Milk, tone: "success" });
+const getStatus = (p: Product): RowStatus => (p.is_active ? "active" : "inactive");
 
 export function ProductsCatalogPage() {
   const { showToast } = useToast();
@@ -97,101 +118,31 @@ export function ProductsCatalogPage() {
     }
   }
 
+  const getActions = (p: Product): RowAction<Product>[] => [
+    { icon: Pencil, label: "Изменить", onClick: () => openEdit(p) },
+    {
+      icon: Power,
+      label: p.is_active ? "Деактивировать" : "Активировать",
+      onClick: () => toggleActive(p),
+    },
+  ];
+
   return (
     <>
-      <PageHeader
+      <DataTable<Product>
         title="Товары"
-        subtitle={
-          items.length
-            ? `${items.length} позиций в каталоге`
-            : "Каталог товаров для оформления визитов"
-        }
-        actions={
-          <Button icon={<Plus size={16} aria-hidden />} onClick={openCreate}>
-            Добавить товар
-          </Button>
-        }
+        addLabel="Добавить товар"
+        onAdd={openCreate}
+        columns={columns}
+        rows={items}
+        rowKey={(p) => p.id}
+        getAvatar={getAvatar}
+        getStatus={getStatus}
+        getActions={getActions}
+        loading={loading}
+        emptyIcon={Milk}
+        emptyText="Товаров пока нет — добавьте первый"
       />
-
-      {loading ? (
-        <TableSkeleton rows={5} cols={5} />
-      ) : items.length === 0 ? (
-        <EmptyState
-          icon={Package}
-          title="Товаров пока нет"
-          description="Добавьте товары, чтобы они появились в форме визита."
-          action={
-            <Button icon={<Plus size={16} aria-hidden />} onClick={openCreate}>
-              Добавить товар
-            </Button>
-          }
-        />
-      ) : (
-        <Table>
-          <thead>
-            <tr>
-              <th>Название</th>
-              <th>Объём/вес</th>
-              <th>Цена</th>
-              <th>Статус</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((p) => (
-              <tr key={p.id} className={p.is_active ? "" : catalog.inactive}>
-                <td>
-                  <div className={catalog.nameCell}>
-                    <span className={`${catalog.tile} ${catalog.tileProduct}`}>
-                      <Package size={18} aria-hidden />
-                    </span>
-                    <span className={catalog.nameTitle}>{p.name}</span>
-                  </div>
-                </td>
-                <td>{p.volume}</td>
-                <td>
-                  <span className={catalog.price}>
-                    {formatPrice(p.price)}
-                    <span className={catalog.currency}>сум</span>
-                  </span>
-                </td>
-                <td>
-                  <span
-                    className={`${catalog.pill} ${
-                      p.is_active ? catalog.pillActive : catalog.pillInactive
-                    }`}
-                  >
-                    {p.is_active ? (
-                      <CheckCircle2 size={13} aria-hidden />
-                    ) : (
-                      <XCircle size={13} aria-hidden />
-                    )}
-                    {p.is_active ? "Активен" : "Неактивен"}
-                  </span>
-                </td>
-                <td>
-                  <div className={catalog.actionsCell}>
-                    <Button
-                      variant="secondary"
-                      icon={<Pencil size={15} aria-hidden />}
-                      onClick={() => openEdit(p)}
-                    >
-                      Изменить
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      icon={<Power size={15} aria-hidden />}
-                      onClick={() => toggleActive(p)}
-                    >
-                      {p.is_active ? "Деактивировать" : "Активировать"}
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
 
       <Modal
         open={open}

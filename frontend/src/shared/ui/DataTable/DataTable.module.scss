@@ -1,0 +1,275 @@
+// DataTable — единая таблица справочников.
+// Токены спецификации (--color-*) маппятся на токены проекта:
+//   background-primary→--surface, background-secondary→--surface-2,
+//   border-tertiary→--border, border-secondary→--border-strong,
+//   text-primary→--text, text-secondary→--text-muted, text-tertiary→--text-faint,
+//   text/background-success→--success/--success-soft,
+//   text/background-info→--primary/--primary-soft, text-danger→--danger.
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+// --- Шапка страницы ---------------------------------------------------------
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+// Инвертированная кнопка «Добавить».
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--text);
+  color: var(--surface);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: filter var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    filter: brightness(1.25);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+// --- Обёртка / таблица ------------------------------------------------------
+.wrapper {
+  width: 100%;
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 14px;
+
+  th,
+  td {
+    padding: 13px 16px;
+    text-align: left;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  thead th {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-faint);
+    background: var(--surface-2);
+    border-bottom: 0.5px solid var(--border-strong);
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.right {
+  text-align: right;
+}
+
+// --- Левая полоса статуса (на первой ячейке строки) -------------------------
+// Первый th получает прозрачную полосу 3px, чтобы контент шапки совпал с телом.
+.firstHead {
+  border-left: 3px solid transparent;
+}
+
+.cellFirst {
+  border-left: 3px solid transparent;
+}
+
+.stripe_active {
+  border-left-color: var(--success);
+}
+
+.stripe_inactive {
+  border-left-color: var(--border-strong);
+}
+
+.stripe_none {
+  border-left-color: transparent;
+}
+
+// --- Строки -----------------------------------------------------------------
+.row {
+  transition: background var(--dur-fast) var(--ease);
+
+  &:hover {
+    background: var(--surface-2);
+  }
+}
+
+// Приглушение неактивных строк: бледное имя + серый аватар.
+.rowInactive {
+  .nameText {
+    color: var(--text-muted);
+  }
+
+  .avatar {
+    filter: grayscale(0.85);
+    opacity: 0.7;
+  }
+}
+
+// --- Ячейка имени + аватар --------------------------------------------------
+.nameCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.nameText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.avatar {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-family: var(--font-display), var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: filter var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+}
+
+.tone_info {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.tone_success {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.tone_muted {
+  background: var(--surface-2);
+  color: var(--text-faint);
+}
+
+// --- Действия (только иконки) -----------------------------------------------
+.actions {
+  display: inline-flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-faint);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+
+  &:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+}
+
+.actionDanger {
+  color: var(--danger);
+
+  &:hover {
+    background: var(--danger-soft);
+    color: var(--danger);
+  }
+}
+
+// --- Пустое состояние -------------------------------------------------------
+.emptyCell {
+  border-bottom: none !important;
+  white-space: normal;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.emptyIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text-faint);
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+// --- Скелетоны --------------------------------------------------------------
+.skAvatar {
+  width: 32px;
+  height: 32px;
+}
+
+.skText {
+  width: 60%;
+  height: 14px;
+}
+
+.skAction {
+  width: 28px;
+  height: 28px;
+}

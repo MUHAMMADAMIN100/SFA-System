@@ -1,4 +1,4 @@
-import { MapPin, Pencil, Plus, Store as StoreIcon, Trash2 } from "lucide-react";
+import { Pencil, Store as StoreIcon, Trash2 } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 
 import {
@@ -9,16 +9,23 @@ import {
   updateStore,
 } from "@/entities/store";
 import {
+  Avatar,
   Button,
-  EmptyState,
+  Column,
+  DataTable,
   Input,
   Modal,
-  PageHeader,
-  Table,
-  TableSkeleton,
+  RowAction,
   useToast,
 } from "@/shared/ui";
 import catalog from "@/shared/styles/catalog.module.scss";
+
+const columns: Column<Store>[] = [
+  { key: "name", header: "Название", width: "44%", render: (s) => s.name },
+  { key: "address", header: "Адрес", width: "34%", render: (s) => s.address || "—" },
+];
+
+const getAvatar = (): Avatar => ({ kind: "icon", icon: StoreIcon, tone: "info" });
 
 export function StoresCatalogPage() {
   const { showToast } = useToast();
@@ -91,88 +98,26 @@ export function StoresCatalogPage() {
     }
   }
 
+  const getActions = (s: Store): RowAction<Store>[] => [
+    { icon: Pencil, label: "Изменить", onClick: () => openEdit(s) },
+    { icon: Trash2, label: "Удалить", onClick: () => remove(s), variant: "danger" },
+  ];
+
   return (
     <>
-      <PageHeader
+      <DataTable<Store>
         title="Магазины"
-        subtitle={
-          items.length
-            ? `${items.length} точек продаж в системе`
-            : "Точки продаж, где менеджеры оформляют визиты"
-        }
-        actions={
-          <Button icon={<Plus size={16} aria-hidden />} onClick={openCreate}>
-            Добавить магазин
-          </Button>
-        }
+        addLabel="Добавить магазин"
+        onAdd={openCreate}
+        columns={columns}
+        rows={items}
+        rowKey={(s) => s.id}
+        getAvatar={getAvatar}
+        getActions={getActions}
+        loading={loading}
+        emptyIcon={StoreIcon}
+        emptyText="Магазинов пока нет — добавьте первый"
       />
-
-      {loading ? (
-        <TableSkeleton rows={5} cols={3} />
-      ) : items.length === 0 ? (
-        <EmptyState
-          icon={StoreIcon}
-          title="Магазинов пока нет"
-          description="Добавьте первый магазин, чтобы менеджеры могли оформлять визиты."
-          action={
-            <Button icon={<Plus size={16} aria-hidden />} onClick={openCreate}>
-              Добавить магазин
-            </Button>
-          }
-        />
-      ) : (
-        <Table>
-          <thead>
-            <tr>
-              <th>Название</th>
-              <th>Адрес</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((s) => (
-              <tr key={s.id}>
-                <td>
-                  <div className={catalog.nameCell}>
-                    <span className={catalog.tile}>
-                      <StoreIcon size={18} aria-hidden />
-                    </span>
-                    <span className={catalog.nameTitle}>{s.name}</span>
-                  </div>
-                </td>
-                <td>
-                  {s.address ? (
-                    <span className={catalog.address}>
-                      <MapPin size={14} aria-hidden />
-                      {s.address}
-                    </span>
-                  ) : (
-                    "—"
-                  )}
-                </td>
-                <td>
-                  <div className={catalog.actionsCell}>
-                    <Button
-                      variant="secondary"
-                      icon={<Pencil size={15} aria-hidden />}
-                      onClick={() => openEdit(s)}
-                    >
-                      Изменить
-                    </Button>
-                    <Button
-                      variant="danger"
-                      icon={<Trash2 size={15} aria-hidden />}
-                      onClick={() => remove(s)}
-                    >
-                      Удалить
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
 
       <Modal
         open={open}
